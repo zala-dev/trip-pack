@@ -1,5 +1,5 @@
 export const initialItems = [
-  { text: "passport", packed: true },
-  { text: "phone charger", packed: false },
-  { text: "shaving kit", packed: false },
+  { name: "passport", packed: true },
+  { name: "phone charger", packed: false },
+  { name: "shaving kit", packed: false },
 ];

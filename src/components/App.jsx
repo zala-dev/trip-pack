@@ -8,13 +8,24 @@ import { useState } from "react";
 
 function App() {
   const [items, setItems] = useState(initialItems);
+
+  const addItem = (newItemText) => {
+    const newItem = {
+      id: new Date().getTime(),
+      name: newItemText,
+      packed: false,
+    };
+    const newItems = [...items, newItem];
+    setItems(newItems);
+  };
+
   return (
     <>
       <BackgroundText />
       <main>
         <Header />
         <ItemList items={items} />
-        <Sidebar setItems={setItems} />
+        <Sidebar addItem={addItem} />
       </main>
       <Footer />
     </>

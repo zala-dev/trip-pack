@@ -5,18 +5,19 @@ export default function ItemList({ items }) {
   return (
     <ul className="item-list">
       {items.map((item, idx) => (
-        <Item key={idx} text={item.text} />
+        <Item key={idx} item={item} />
       ))}
     </ul>
   );
 }
 
-function Item({ text }) {
+function Item({ item }) {
+  const { name, packed } = item;
   return (
     <li className="item">
       <label>
-        <input id="checkbox" type="checkbox" />
-        {text}
+        <input id="checkbox" type="checkbox" checked={packed} />
+        {name}
       </label>
       <button>❌</button>
     </li>

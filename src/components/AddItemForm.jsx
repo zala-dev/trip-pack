@@ -1,30 +1,28 @@
 import { useRef, useState } from "react";
 import Button from "./Button";
 
-export default function AddItemForm({ setItems }) {
+export default function AddItemForm({ onAddItem }) {
   const inputRef = useRef(null);
 
-  const [newItem, setNewItem] = useState({
-    text: "",
-    packed: false,
-  });
+  const [itemText, setItemText] = useState("");
 
   const handleOnChange = (e) => {
     const { value } = e.target;
-    setNewItem({ ...newItem, text: value });
+    console.log("Value: ", value);
+    setItemText(value);
   };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
-    if (!newItem.text) {
+    if (!itemText) {
       alert(`Item name can not be empty`);
       inputRef.current.focus();
       return;
     }
 
-    setItems((prev) => [...prev, newItem]);
-    setNewItem({ text: "", packed: false });
+    onAddItem(itemText);
+    setItemText("");
   };
 
   return (
@@ -33,8 +31,8 @@ export default function AddItemForm({ setItems }) {
       <input
         ref={inputRef}
         placeholder="Type item name here"
-        name="newItem"
-        value={newItem.text}
+        name="itemText"
+        value={itemText}
         onChange={handleOnChange}
         autoFocus
       />

@@ -8,7 +8,6 @@ export default function AddItemForm({ onAddItem }) {
 
   const handleOnChange = (e) => {
     const { value } = e.target;
-    console.log("Value: ", value);
     setItemText(value);
   };
 

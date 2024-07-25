@@ -1,13 +1,4 @@
-import { useState } from "react";
-
-const initialItems = [
-  { text: "passport", packed: true },
-  { text: "phone charger", packed: false },
-  { text: "shaving kit", packed: false },
-];
-
-export default function ItemList() {
-  const [items, setItems] = useState(initialItems);
+export default function ItemList({ items }) {
   if (!items) {
     return <p>No items in the list!</p>;
   }

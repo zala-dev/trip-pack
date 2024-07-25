@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <BackgroundText />
-      <main></main>
+      <main className="text-3xl font-bold underline">Hello World</main>
       <Footer />
     </>
   );

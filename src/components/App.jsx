@@ -1,11 +1,18 @@
 import BackgroundText from "./BackgroundText";
+import Header from "./Header";
 import Footer from "./Footer";
+import Sidebar from "./Sidebar";
+import ItemList from "./ItemList";
 
 function App() {
   return (
     <>
       <BackgroundText />
-      <main className="text-3xl font-bold underline">Hello World</main>
+      <main>
+        <Header />
+        <ItemList />
+        <Sidebar />
+      </main>
       <Footer />
     </>
   );

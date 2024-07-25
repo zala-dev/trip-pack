@@ -1,3 +1,10 @@
 export default function Footer() {
-  return <div>Footer</div>;
+  return (
+    <footer>
+      <small>&copy; 2024. Copyright by Zala.</small>
+      <p>
+        Version <strong>1</strong>
+      </p>
+    </footer>
+  );
 }

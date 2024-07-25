@@ -1,3 +1,3 @@
 export default function BackgroundText() {
-  return <div>BackgroundText</div>;
+  return <div>TripPack</div>;
 }

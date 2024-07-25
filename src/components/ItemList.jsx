@@ -1,25 +1,66 @@
-export default function ItemList({ items }) {
-  if (!items) {
-    return <p>No items in the list!</p>;
-  }
+import Select from "react-select";
+import NoItem from "./NoItem";
+import { useState } from "react";
+
+const sortingOptions = [
+  { label: "Sort by default", value: "default" },
+  { label: "Sort by packed", value: "packed" },
+  { label: "Sort by unpacked", value: "unpacked" },
+];
+
+export default function ItemList({ items, deleteItem, toggleCheckgox }) {
+  const [sortBy, setSoryBy] = useState("default");
+  const sortedItems = items.sort((a, b) => {
+    if (sortBy === "packed") {
+      return b.packed - a.packed;
+    }
+
+    if (sortBy === "unpacked") {
+      return a.packed - b.packed;
+    }
+
+    return;
+  });
   return (
     <ul className="item-list">
-      {items.map((item, idx) => (
-        <Item key={idx} item={item} />
+      {!items.length && <NoItem />}
+
+      {items.length > 0 ? (
+        <section className="sorting">
+          <Select
+            onChange={(option) => setSoryBy(option.value)}
+            defaultValue={sortingOptions[0]}
+            options={sortingOptions}
+          />
+        </section>
+      ) : null}
+
+      {sortedItems.map((item, idx) => (
+        <Item
+          key={idx}
+          item={item}
+          deleteItem={deleteItem}
+          toggleCheckgox={toggleCheckgox}
+        />
       ))}
     </ul>
   );
 }
 
-function Item({ item }) {
-  const { name, packed } = item;
+function Item({ item, deleteItem, toggleCheckgox }) {
+  const { id, name, packed } = item;
   return (
     <li className="item">
       <label>
-        <input id="checkbox" type="checkbox" checked={packed} />
+        <input
+          id="checkbox"
+          type="checkbox"
+          checked={packed}
+          onClick={() => toggleCheckgox(id)}
+        />
         {name}
       </label>
-      <button>❌</button>
+      <button onClick={() => deleteItem(id)}>❌</button>
     </li>
   );
 }

@@ -1,7 +1,13 @@
-export default function ItemCounter() {
+export default function ItemCounter({ totalNumOfItems, numOfItemsPacked }) {
   return (
     <p className="counter">
-      <strong>1</strong> / 3 items packed
+      {totalNumOfItems === 0 ? (
+        <strong>No Items</strong>
+      ) : (
+        <span>
+          <strong>{numOfItemsPacked}</strong> / {totalNumOfItems} items packed
+        </span>
+      )}
     </p>
   );
 }

@@ -29,7 +29,7 @@ export default function AddItemForm({ onAddItem }) {
       <h2>Add an item</h2>
       <input
         ref={inputRef}
-        placeholder="Type item name here"
+        placeholder="Passport..."
         name="itemText"
         value={itemText}
         onChange={handleOnChange}

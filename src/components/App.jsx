@@ -19,6 +19,22 @@ function App() {
     setItems(newItems);
   };
 
+  const deleteItem = (id) => {
+    const newItems = items.filter((item) => item.id !== id);
+    setItems(newItems);
+  };
+
+  const toggleCheckgox = (id) => {
+    const newItems = items.map((item) => {
+      if (item.id === id) {
+        return { ...item, packed: !item.packed };
+      }
+
+      return item;
+    });
+    setItems(newItems);
+  };
+
   const removeAllItems = () => {
     setItems([]);
   };
@@ -47,8 +63,15 @@ function App() {
     <>
       <BackgroundText />
       <main>
-        <Header />
-        <ItemList items={items} />
+        <Header
+          totalNumOfItems={items.length}
+          numOfItemsPacked={items.filter((item) => item.packed).length}
+        />
+        <ItemList
+          items={items}
+          deleteItem={deleteItem}
+          toggleCheckgox={toggleCheckgox}
+        />
         <Sidebar
           addItem={addItem}
           removeAllItems={removeAllItems}

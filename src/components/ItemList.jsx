@@ -1,6 +1,6 @@
 import Select from "react-select";
 import NoItem from "./NoItem";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 const sortingOptions = [
   { label: "Sort by default", value: "default" },
@@ -10,17 +10,23 @@ const sortingOptions = [
 
 export default function ItemList({ items, deleteItem, toggeleCheckbox }) {
   const [sortBy, setSoryBy] = useState("default");
-  const sortedItems = items.sort((a, b) => {
-    if (sortBy === "packed") {
-      return b.packed - a.packed;
-    }
 
-    if (sortBy === "unpacked") {
-      return a.packed - b.packed;
-    }
+  const sortedItems = useMemo(
+    () =>
+      [...items].sort((a, b) => {
+        if (sortBy === "packed") {
+          return b.packed - a.packed;
+        }
 
-    return;
-  });
+        if (sortBy === "unpacked") {
+          return a.packed - b.packed;
+        }
+
+        return;
+      }),
+    [items, sortBy]
+  );
+
   return (
     <ul className="item-list">
       {!items.length && <NoItem />}

@@ -8,7 +8,7 @@ const sortingOptions = [
   { label: "Sort by unpacked", value: "unpacked" },
 ];
 
-export default function ItemList({ items, deleteItem, toggleCheckgox }) {
+export default function ItemList({ items, deleteItem, toggeleCheckbox }) {
   const [sortBy, setSoryBy] = useState("default");
   const sortedItems = items.sort((a, b) => {
     if (sortBy === "packed") {
@@ -40,14 +40,14 @@ export default function ItemList({ items, deleteItem, toggleCheckgox }) {
           key={idx}
           item={item}
           deleteItem={deleteItem}
-          toggleCheckgox={toggleCheckgox}
+          toggeleCheckbox={toggeleCheckbox}
         />
       ))}
     </ul>
   );
 }
 
-function Item({ item, deleteItem, toggleCheckgox }) {
+function Item({ item, deleteItem, toggeleCheckbox }) {
   const { id, name, packed } = item;
   return (
     <li className="item">
@@ -56,7 +56,7 @@ function Item({ item, deleteItem, toggleCheckgox }) {
           id="checkbox"
           type="checkbox"
           checked={packed}
-          onClick={() => toggleCheckgox(id)}
+          onChange={() => toggeleCheckbox(id)}
         />
         {name}
       </label>

@@ -4,10 +4,11 @@ import Footer from "./Footer";
 import Sidebar from "./Sidebar";
 import ItemList from "./ItemList";
 import { initialItems } from "../lib/constants";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [items, setItems] = useState(initialItems);
+  const dataFromLocalStorage = JSON.parse(localStorage.getItem("items"));
+  const [items, setItems] = useState(dataFromLocalStorage || []);
 
   const addItem = (newItemText) => {
     const newItem = {
@@ -24,7 +25,7 @@ function App() {
     setItems(newItems);
   };
 
-  const toggleCheckgox = (id) => {
+  const toggeleCheckbox = (id) => {
     const newItems = items.map((item) => {
       if (item.id === id) {
         return { ...item, packed: !item.packed };
@@ -59,6 +60,9 @@ function App() {
     setItems(newItems);
   };
 
+  useEffect(() => {
+    localStorage.setItem("items", JSON.stringify(items));
+  }, [items]);
   return (
     <>
       <BackgroundText />
@@ -70,7 +74,7 @@ function App() {
         <ItemList
           items={items}
           deleteItem={deleteItem}
-          toggleCheckgox={toggleCheckgox}
+          toggeleCheckbox={toggeleCheckbox}
         />
         <Sidebar
           addItem={addItem}

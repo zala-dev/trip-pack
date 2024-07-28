@@ -1,18 +1,28 @@
 import Select from "react-select";
 import NoItem from "./NoItem";
 import { useMemo, useState } from "react";
-
-import { useItemsContext } from "../lib/custom-hooks";
+import { useItemsStore } from "../store/items-store";
 
 const sortingOptions = [
-  { label: "Sort by default", value: "default" },
-  { label: "Sort by packed", value: "packed" },
-  { label: "Sort by unpacked", value: "unpacked" },
+  {
+    label: "Sort by default",
+    value: "default",
+  },
+  {
+    label: "Sort by packed",
+    value: "packed",
+  },
+  {
+    label: "Sort by unpacked",
+    value: "unpacked",
+  },
 ];
 
 export default function ItemList() {
-  const [sortBy, setSoryBy] = useState("default");
-  const { items, deleteItem, toggeleCheckbox } = useItemsContext();
+  const items = useItemsStore((state) => state.items);
+  const deleteItem = useItemsStore((state) => state.deleteItem);
+  const toggleCheckbox = useItemsStore((state) => state.toggleCheckbox);
+  const [sortBy, setSortBy] = useState("default");
 
   const sortedItems = useMemo(
     () =>
@@ -32,44 +42,45 @@ export default function ItemList() {
 
   return (
     <ul className="item-list">
-      {!items.length && <NoItem />}
+      {items.length === 0 ? <NoItem /> : null}
 
       {items.length > 0 ? (
         <section className="sorting">
           <Select
-            onChange={(option) => setSoryBy(option.value)}
+            onChange={(option) => setSortBy(option.value)}
             defaultValue={sortingOptions[0]}
             options={sortingOptions}
           />
         </section>
       ) : null}
 
-      {sortedItems.map((item, idx) => (
-        <Item
-          key={idx}
-          item={item}
-          deleteItem={deleteItem}
-          toggeleCheckbox={toggeleCheckbox}
-        />
-      ))}
+      {sortedItems.map((item) => {
+        return (
+          <Item
+            key={item.id}
+            item={item}
+            onDeleteItem={deleteItem}
+            onToggleCheckbox={toggleCheckbox}
+          />
+        );
+      })}
     </ul>
   );
 }
 
-function Item({ item, deleteItem, toggeleCheckbox }) {
-  const { id, name, packed } = item;
+function Item({ item, onDeleteItem, onToggleCheckbox }) {
   return (
     <li className="item">
       <label>
         <input
-          id="checkbox"
+          onChange={() => onToggleCheckbox(item.id)}
+          checked={item.packed}
           type="checkbox"
-          checked={packed}
-          onChange={() => toggeleCheckbox(id)}
-        />
-        {name}
+        />{" "}
+        {item.name}
       </label>
-      <button onClick={() => deleteItem(id)}>❌</button>
+
+      <button onClick={() => onDeleteItem(item.id)}>❌</button>
     </li>
   );
 }

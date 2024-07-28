@@ -1,7 +1,7 @@
-import { useItemsContext } from "../lib/custom-hooks";
+import { useItemsStore } from "../store/items-store";
 
 export default function ItemCounter() {
-  const { items } = useItemsContext();
+  const items = useItemsStore((state) => state.items);
 
   return (
     <p className="counter">

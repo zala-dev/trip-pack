@@ -1,31 +1,31 @@
 import { useRef, useState } from "react";
 import Button from "./Button";
 
-import { useItemsContext } from "../lib/custom-hooks";
+import { useItemsStore } from "../store/items-store";
 
 export default function AddItemForm() {
-  const { addItem: onAddItem } = useItemsContext();
+  const addItem = useItemsStore((state) => state.addItem);
 
   const inputRef = useRef(null);
 
-  const [itemText, setItemText] = useState("");
+  const [itemName, setItemName] = useState("");
 
   const handleOnChange = (e) => {
     const { value } = e.target;
-    setItemText(value);
+    setItemName(value);
   };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
-    if (!itemText) {
+    if (!itemName) {
       alert(`Item name can not be empty`);
       inputRef.current.focus();
       return;
     }
 
-    onAddItem(itemText);
-    setItemText("");
+    addItem(itemName);
+    setItemName("");
   };
 
   return (
@@ -34,8 +34,8 @@ export default function AddItemForm() {
       <input
         ref={inputRef}
         placeholder="Passport..."
-        name="itemText"
-        value={itemText}
+        name="itemName"
+        value={itemName}
         onChange={handleOnChange}
         autoFocus
       />

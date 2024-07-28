@@ -2,14 +2,17 @@ import Select from "react-select";
 import NoItem from "./NoItem";
 import { useMemo, useState } from "react";
 
+import { useItemsContext } from "../lib/custom-hooks";
+
 const sortingOptions = [
   { label: "Sort by default", value: "default" },
   { label: "Sort by packed", value: "packed" },
   { label: "Sort by unpacked", value: "unpacked" },
 ];
 
-export default function ItemList({ items, deleteItem, toggeleCheckbox }) {
+export default function ItemList() {
   const [sortBy, setSoryBy] = useState("default");
+  const { items, deleteItem, toggeleCheckbox } = useItemsContext();
 
   const sortedItems = useMemo(
     () =>

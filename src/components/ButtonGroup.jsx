@@ -1,11 +1,14 @@
 import Button from "./Button";
+import { useItemsContext } from "../lib/custom-hooks";
 
-export default function ButtonGroup({
-  removeAllItems,
-  resetToInitialItems,
-  markAllAsComplete,
-  markAllAsIncomplete,
-}) {
+export default function ButtonGroup() {
+  const {
+    removeAllItems,
+    resetToInitialItems,
+    markAllAsComplete,
+    markAllAsIncomplete,
+  } = useItemsContext();
+
   const secondaryButtonTexts = [
     { text: "Mark all as complete", onClick: markAllAsComplete },
     { text: "Mark all as incomplete", onClick: markAllAsIncomplete },

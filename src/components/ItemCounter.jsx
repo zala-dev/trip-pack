@@ -1,11 +1,16 @@
-export default function ItemCounter({ totalNumOfItems, numOfItemsPacked }) {
+import { useItemsContext } from "../lib/custom-hooks";
+
+export default function ItemCounter() {
+  const { items } = useItemsContext();
+
   return (
     <p className="counter">
-      {totalNumOfItems === 0 ? (
+      {items.length === 0 ? (
         <strong>No Items</strong>
       ) : (
         <span>
-          <strong>{numOfItemsPacked}</strong> / {totalNumOfItems} items packed
+          <strong>{items.filter((item) => item.packed).length}</strong> /{" "}
+          {items.length} items packed
         </span>
       )}
     </p>
